@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+    <h1>ECG CRT despiker and processor</h1>
+    <p>Upload your ECG file and this program will filter it for outliers and noise and return some useful parameters back to you such as:<br>
+        QRS VTI, HeartRate, TPeakTEnd, and QTC
+    </p>
+
+    <form class="form" method="post" enctype="multipart/form-data">
+        <label for="outFileName">Please enter a name for the .csv file output (default is Data.csv): </label><br>
+        <input type="text" name="outName"><br><br>
+        <label for="inFile">Select the ECG .xml file you want to process:</label><br><br>
+        <input type="file" name="inFile[]" multiple><br><br>
+        <input type="submit" name="submit" value="Submit File"><br><br>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <br><br><br><br>
+
+        <p>The following options are to adjust the filtering process. They are optional and the default values are listed for each.</p>
+        <label for="outFileName">Flat Value for paced ECG Z-Score threshold (default is 50): </label><br>
+        <input type="text" name="pacedFlatValue"><br><br>
+
+        <label for="outFileName">Flat Value for non-paced ECG Z-Score threshold (default is 60): </label><br>
+        <input type="text" name="unpacedFlatValue"><br><br>
+
+        <label for="outFileName">Percent Value for paced ECG Z-Score threshold (default is 0.98): </label><br>
+        <input type="text" name="pacedThresholdPercentCutoff"><br><br>
+
+        <label for="outFileName">Percent Value for non-paced ECG Z-Score threshold (default is 0.992): </label><br>
+        <input type="text" name="unpacedThresholdPercentCutoff"><br><br>
+
+        <label for="outFileName">Cutoff Value max Z-Score for deciding whether to use the 'Paced' or 'Non-Paced' filtering process (default is 150): </label><br>
+        <input type="text" name="pacedZScoreCutoff"><br><br>
+
+        <label for="outFileName">Value for the hyperbolic Cosine function. This is based on the length of the data. For 1000Hz sampled ECGs 600 is recommended (default is 600): </label><br>
+        <input type="text" name="hyperbolicCosFrequencyValue"><br>
+
+    </form>
+
+    <br><br>
+
+    <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %} -->
+
+</body>
+</html>
